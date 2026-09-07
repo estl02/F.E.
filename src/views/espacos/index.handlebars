@@ -1,0 +1,228 @@
+<h2>Espaços</h2>
+
+<div class="card">
+    <h3>Cadastrar novo espaço</h3>
+
+    <form action="/espacos" method="POST">
+
+        <label for="nome">Nome:</label>
+        <input
+            type="text"
+            id="nome"
+            name="nome"
+            placeholder="Ex.: Sala 01, Lab 01..."
+            required
+        >
+
+        <label for="bloco">Bloco:</label>
+        <input
+            type="text"
+            id="bloco"
+            name="bloco"
+            placeholder="Ex.: Bloco A, Bloco B..."
+            required
+        >
+
+        <label for="estadoFisico">Estado físico:</label>
+        <input
+            type="text"
+            id="estadoFisico"
+            name="estadoFisico"
+            placeholder="Ex.: Bom, Regular, Danificado, Interdiatdo"
+            required
+        >
+
+        <label for="recursos">Recursos:</label>
+        <input
+            type="text"
+            id="recursos"
+            name="recursos"
+            placeholder="Ex.: Computadores, projetor"
+            required
+        >
+
+        <button type="submit">
+            Cadastrar espaço
+        </button>
+
+    </form>
+</div>
+
+
+<div class="card">
+
+    <h3>Espaços cadastrados</h3>
+
+    {{#if espacos}}
+
+        <table>
+
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Bloco</th>
+                    <th>Estado físico</th>
+                    <th>Recursos</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                {{#each espacos}}
+
+                    <tr>
+
+                        <td>{{espacoId}}</td>
+
+                        <td>{{nome}}</td>
+
+                        <td>{{bloco}}</td>
+
+                        <td>{{estadoFisico}}</td>
+
+                        <td>{{recursos}}</td>
+
+                        <td>
+
+                            <div class="acoes">
+
+                                <button
+                                    type="button"
+                                    class="btn-editar"
+                                    onclick="abrirModal('editar-espaco-{{espacoId}}')"
+                                > 
+                                Editar
+                                </button>
+
+                                <form
+                                    action="/espacos/{{espacoId}}/excluir"
+                                    method="POST"
+                                >
+                                    <button
+                                        type="submit"
+                                        class="btn-excluir"
+                                        onclick="return confirm('tem certeza que deseja excluir este espaço?')"
+                                    >
+                                        Excluir
+                                    </button>
+                                </form>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+                {{/each}}
+
+            </tbody>
+
+        </table>
+
+    {{else}}
+
+        <p>Nenhum espaço cadastrado.</p>
+
+    {{/if}}
+
+</div>
+
+
+{{#each espacos}}
+
+<div
+    id="editar-espaco-{{espacoId}}"
+    class="modal"
+>
+
+    <div class="modal-conteudo">
+
+        <span
+            class="fechar"
+            onclick="fecharModal('editar-espaco-{{espacoId}}')"
+        >
+            &times;
+        </span>
+
+        <h3>Editar espaço</h3>
+
+        <form
+            action="/espacos/{{espacoId}}/editar"
+            method="POST"
+        >
+
+            <label for="nome-{{espacoId}}">
+                Nome:
+            </label>
+
+            <input
+                type="text"
+                id="nome-{{espacoId}}"
+                name="nome"
+                value="{{nome}}"
+                required
+            >
+
+
+            <label for="bloco-{{espacoId}}">
+                Bloco:
+            </label>
+
+            <input
+                type="text"
+                id="bloco-{{espacoId}}"
+                name="bloco"
+                value="{{bloco}}"
+                required
+            >
+
+
+            <label for="estadoFisico-{{espacoId}}">
+                Estado físico:
+            </label>
+
+            <input
+                type="text"
+                id="estadoFisico-{{espacoId}}"
+                name="estadoFisico"
+                value="{{estadoFisico}}"
+                required
+            >
+
+
+            <label for="recursos-{{espacoId}}">
+                Recursos:
+            </label>
+
+            <input
+                type="text"
+                id="recursos-{{espacoId}}"
+                name="recursos"
+                value="{{recursos}}"
+                required
+            >
+
+
+            <button type="submit">
+                Salvar alterações
+            </button>
+
+            <button
+                type="button"
+                class="btn-cancelar"
+                onclick="fecharModal('editar-espaco-{{espacoId}}')"
+            >
+                Cancelar
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+{{/each}}
+
+

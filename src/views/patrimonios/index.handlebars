@@ -1,0 +1,241 @@
+<h2>Patrimônios</h2>
+
+<div class="card">
+
+    <h3>Cadastrar novo patrimônio</h3>
+
+    <form action="/patrimonios" method="POST">
+
+        <label for="nome">Nome:</label>
+
+        <input
+            type="text"
+            id="nome"
+            name="nome"
+            placeholder="Ex.: Computador, cadeira, projetor"
+            required
+        >
+
+
+        <label for="codigo">Código:</label>
+
+        <input
+            type="text"
+            id="codigo"
+            name="codigo"
+            placeholder=""
+            required
+        >
+
+
+        <label for="espacoId">Espaço:</label>
+
+        <select
+            id="espacoId"
+            name="espacoId"
+            required
+        >
+
+            <option value="">
+                Selecione um espaço
+            </option>
+
+            {{#each espacos}}
+
+                <option value="{{espacoId}}">
+                    {{nome}} - {{bloco}}
+                </option>
+
+            {{/each}}
+
+        </select>
+
+
+        <button type="submit">
+            Cadastrar patrimônio
+        </button>
+
+    </form>
+
+</div>
+
+
+<div class="card">
+
+    <h3>Patrimônios cadastrados</h3>
+
+    {{#if patrimonios}}
+
+        <table>
+
+            <thead>
+
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Código</th>
+                    <th>Espaço</th>
+                    <th>Ações</th>
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                {{#each patrimonios}}
+
+                    <tr>
+
+                        <td>{{id}}</td>
+
+                        <td>{{nome}}</td>
+
+                        <td>{{codigo}}</td>
+
+                        <td>
+                            {{Espaco.nome}}
+                        </td>
+
+                        <td>
+
+                            <div class="acoes">
+
+                                    <button
+                                        type="button"
+                                        class="btn-editar"
+                                        onclick="abrirModal('editar-patrimonio-{{id}}')"
+                                    >
+                                        Editar
+                                    </button>
+
+                                </form>
+
+
+                                <form
+                                    action="/patrimonios/{{id}}/excluir"
+                                    method="POST"
+                                >
+
+                                    <button
+                                        type="submit"
+                                        class="btn-excluir"
+                                        onclick="return confirm('Tem certeza que deseja excluir este patrimônio?')"
+                                    >
+                                        Excluir
+                                    </button>
+
+                                </form>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+                {{/each}}
+
+            </tbody>
+
+        </table>
+
+    {{else}}
+
+        <p>Nenhum patrimônio cadastrado.</p>
+
+    {{/if}}
+
+</div>
+
+
+{{#each patrimonios}}
+
+<div
+    id="editar-patrimonio-{{id}}"
+    class="modal"
+>
+
+    <div class="modal-conteudo">
+
+        <span
+            class="fechar"
+            onclick="fecharModal('editar-patrimonio-{{id}}')"
+        >
+            &times;
+        </span>
+
+        <h3>Editar patrimônio</h3>
+
+        <form
+            action="/patrimonios/{{id}}/editar"
+            method="POST"
+        >
+
+            <label for="nome-patrimonio-{{id}}">
+                Nome:
+            </label>
+
+            <input
+                type="text"
+                id="nome-patrimonio-{{id}}"
+                name="nome"
+                value="{{nome}}"
+                required
+            >
+
+
+            <label for="codigo-patrimonio-{{id}}">
+                Código:
+            </label>
+
+            <input
+                type="text"
+                id="codigo-patrimonio-{{id}}"
+                name="codigo"
+                value="{{codigo}}"
+                required
+            >
+
+
+            <label for="espaco-patrimonio-{{id}}">
+                Espaço:
+            </label>
+
+            <select
+                id="espaco-patrimonio-{{id}}"
+                name="espacoId"
+                required
+            >
+
+                {{#each ../espacos}}
+
+                    <option
+                        value="{{espacoId}}"
+                        {{#if (eq espacoId ../espacoId)}}selected{{/if}}
+                    >
+                        {{nome}} - {{bloco}}
+                    </option>
+
+                {{/each}}
+
+            </select>
+
+
+            <button type="submit">
+                Salvar alterações
+            </button>
+
+            <button
+                type="button"
+                class="btn-cancelar"
+                onclick="fecharModal('editar-patrimonio-{{id}}')"
+            >
+                Cancelar
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+{{/each}}

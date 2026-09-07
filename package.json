@@ -1,0 +1,28 @@
+{
+  "name": "f.e.",
+  "version": "1.0.0",
+  "description": "O projeto busca tornar o processo de agendamento mais rápido, eficiente e transparente contribuindo para uma melhor organização dos recursos físicos do campus e para a redução de problemas causados pelos métodos manuais atualmente utilizados.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/estl02/F.E..git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/estl02/F.E./issues"
+  },
+  "homepage": "https://github.com/estl02/F.E.#readme",
+  "dependencies": {
+    "express": "^5.2.1",
+    "express-handlebars": "^9.0.1",
+    "sequelize": "^6.37.8",
+    "sqlite3": "^6.0.1"
+  }
+}

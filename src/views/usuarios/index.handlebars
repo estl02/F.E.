@@ -1,0 +1,203 @@
+<h2>Usuários</h2>
+
+<div class="card">
+    <h3>Cadastrar novo usuário</h3>
+
+    <form action="/usuarios" method="POST">
+
+        <label for="nome">Nome:</label>
+        <input
+            type="text"
+            id="nome"
+            name="nome"
+            placeholder="Fulano D`Town"
+            required
+        >
+
+        <label for="emailIstitucional">Email Institucional:</label>
+        <input
+            type="text"
+            id="emailInstitucional"
+            name="emailInstitucional"
+            placeholder="Ex.: fdt123@..."
+            required
+        >
+
+        <label for="matricula">Matrícula</label>
+        <input
+            type="text"
+            id="matricula"
+            name="matricula"
+            placeholder="Ex.: 20511TDS-0000"
+            required
+        >
+
+        <button type="submit">
+            Cadastrar usuário
+        </button>
+
+    </form>
+</div>
+
+
+<div class="card">
+
+    <h3>Usuários cadastrados</h3>
+
+    {{#if usuarios}}
+
+        <table>
+
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Email Institucional</th>
+                    <th>Matrícula</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                {{#each usuarios}}
+
+                    <tr>
+
+                        <td>{{id}}</td>
+
+                        <td>{{nome}}</td>
+
+                        <td>{{emailInstitucional}}</td>
+
+                        <td>{{matricula}}</td>
+
+                        <td>
+
+                            <div class="acoes">
+
+                                <button
+                                    type="button"
+                                    class="btn-editar"
+                                    onclick="abrirModal('editar-usuario-{{id}}')"
+                                > 
+                                Editar
+                                </button>
+
+                                <form
+                                    action="/usuarios/{{id}}/excluir"
+                                    method="POST"
+                                >
+                                    <button
+                                        type="submit"
+                                        class="btn-excluir"
+                                        onclick="return confirm('tem certeza que deseja excluir este usuário?')"
+                                    >
+                                        Excluir
+                                    </button>
+                                </form>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+                {{/each}}
+
+            </tbody>
+
+        </table>
+
+    {{else}}
+
+        <p>Nenhum usuário cadastrado.</p>
+
+    {{/if}}
+
+</div>
+
+
+{{#each usuarios}}
+
+<div
+    id="editar-usuario-{{id}}"
+    class="modal"
+>
+
+    <div class="modal-conteudo">
+
+        <span
+            class="fechar"
+            onclick="fecharModal('editar-usuario-{{id}}')"
+        >
+            &times;
+        </span>
+
+        <h3>Editar usuário</h3>
+
+        <form
+            action="/usuarios/{{id}}/editar"
+            method="POST"
+        >
+
+            <label for="nome-{{id}}">
+                Nome:
+            </label>
+
+            <input
+                type="text"
+                id="nome-{{id}}"
+                name="nome"
+                value="{{nome}}"
+                required
+            >
+
+
+            <label for="emailInstitucional-{{id}}">
+                Email Institucional:
+            </label>
+
+            <input
+                type="text"
+                id="emailInstitucional-{{id}}"
+                name="emailInstitucional"
+                value="{{emailInstitucional}}"
+                required
+            >
+
+
+            <label for="matricula-{{id}}">
+                Matrícula:
+            </label>
+
+            <input
+                type="text"
+                id="matricula-{{id}}"
+                name="matricula"
+                value="{{matricula}}"
+                required
+            >
+
+
+            <button type="submit">
+                Salvar alterações
+            </button>
+
+            <button
+                type="button"
+                class="btn-cancelar"
+                onclick="fecharModal('editar-usuario-{{id}}')"
+            >
+                Cancelar
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+{{/each}}
+
+
